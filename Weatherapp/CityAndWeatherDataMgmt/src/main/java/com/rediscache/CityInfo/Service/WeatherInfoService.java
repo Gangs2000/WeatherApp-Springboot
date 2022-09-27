@@ -28,7 +28,7 @@ import java.util.UUID;
 @Service
 public class WeatherInfoService implements WeatherInfoInterface {
 
-    private final String apiKey="94043c06b6556c7b17378841ceded534";
+    private final String apiKey="************************************";
 
     @Autowired WeatherInfoInterface weatherInfoInterface;
     DecimalFormat decimalFormat = new DecimalFormat("#.00");
