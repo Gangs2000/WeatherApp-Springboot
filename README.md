@@ -19,8 +19,11 @@ Core Java, Spring boot Web, Rest API, Spring boot data JPA and MongoDB, Spring b
 In total there are 4 microservices implemented in backend those are,
 
 1. **CITY-AND-WEATHER-RESTAPI-SERVICE** - This microservice basically connected to the OpenWeather external API service to get current weather, city details and Forecast data.
+
 2. **WEATHERAPP-SERVICE** - In this microservice all UI design related stuff have been implemented, basically it renders HTML pages and this service uses open feign client concept to communicate with CITY-AND-WEATHER-RESTAPI-SERVICE microservice to fetch data and display data in HTML page.
+
 3. **OTP-SERVICE** - OTP service is used for resetting forgotten password, In order to reset password user must enter an OTP that they will get it via registered email ID. RabbitMQ concept has been implemented to make bridge between WEATHERAPP-SERVICE and OTP-SERVICE.
+
 4. **API-GATEWAY** - API gateway basically routes the requests to eureka server, once the eureka service identifies the service is available in its bucket it send respond back to API gateway. Main purpose of using gateway is not to expose port number. It follows abstraction. Every service has its unique port number but all requests will be routed from API Gateway service port number.
 
 **Netflix Eureka Server and Discovery client :**
@@ -87,8 +90,9 @@ Eureka server has used in this project, Server which helps to register all micro
 
 **Resources**
 
-In this project, used Openweather external API's to fetch all weather details, It is free of cost with enough number of features.
+In this project, used Openweather external API's to fetch all weather details, It is free of cost with good enough number of features.
 
+( Free )
 60 calls/minute
 1,000,000 calls/month
 
