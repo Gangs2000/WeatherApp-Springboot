@@ -90,8 +90,9 @@ Eureka server has used in this project, Server which helps to register all micro
 
 **Resources**
 
-In this project, used Openweather external API's to fetch all weather details, It is free of cost with enough number of features.
+In this project, used Openweather external API's to fetch all weather details, It is free of cost with good enough number of features.
 
+( Free )
 60 calls/minute
 1,000,000 calls/month
 
