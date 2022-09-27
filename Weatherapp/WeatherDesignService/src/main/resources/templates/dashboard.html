@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>WeatherApp Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        .boldText{font-weight:bold;}
+        #highlight:hover{font-weight:bold;}
+        .gradient{background-image:linear-gradient(to bottom left, #FFFFFF, #BFC2BD);}
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            border-radius: 5px;
+            background-image: linear-gradient(to bottom left, #FFFFFF, #000000);
+        }
+        .bi{font-size:18px;}
+    </style>
+</head>
+<body style="background-color:#95A3E0;">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm" style="position:fixed">
+                <nav class="navbar navbar-expand-sm navbar-dark bg-dark" style="height:100%; padding:30px;">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="javascript:void(0)"><strong><i class="bi bi-sun-fill"></i>&nbsp;&nbsp;Live Weather</strong></a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="mynavbar">
+                            <ul class="navbar-nav me-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#currentWeather" data-bs-toggle="modal">Get Current Weather</a>
+                                </li>
+                            </ul>
+                            <div class="row" style="width:40%">
+                                <div class="col-sm">
+                                    <p th:text="'Location : '+${session.sessionLocation}" style="color:white; font-weight:bold; margin-top:8%"/>
+                                </div>
+                                <div class="col-sm">
+                                    <p th:text="${session.sessionEmailId}" style="color:white; font-weight:bold; margin-top:5%"/>
+                                </div>
+                                <div class="col-sm">
+                                    <a href="/logout"><button class="btn btn-primary" style="width:80%; font-weight:bold; margin-top:4%">Logout</button></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div><br><br><br><br>
+        <div class="row" style="margin-top:5%;">
+            <div class="col-sm">
+                    <form class="d-flex" style="margin-left:30%" action="/fetchWeather" method="post">
+                        <input style="width:50%;"  class="form-control me-2" type="text" name="cityName" autocomplete="off" placeholder="Type city name.." required>
+                        <button class="btn btn-primary" type="submit"><strong><i class="bi bi-sun-fill"></i>&nbsp;&nbsp;Get Weather</strong></button>
+                    </form>
+            </div>
+        </div><br><br><br><br>
+        <div class="row">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-4">
+                <div class="gradient" style="width:100%; height:100%; background-color:white; padding:20px">
+                    <h3 th:text="'City Info '+${location}"/><br><br>
+                    <table class="table table-striped table-hover">
+                        <tbody>
+                            <tr>
+                                <td class="boldText"><i class="bi bi-building"></i>&nbsp;&nbsp;&nbsp;&nbsp;CityName</td>
+                                <td th:text="${cityData.cityName}"/>
+                            </tr>
+                            <tr>
+                                <td class="boldText"><i class="bi bi-globe"></i>&nbsp;&nbsp;&nbsp;&nbsp;Country</td>
+                                <td th:text="${cityData.country}"/>
+                            </tr>
+                            <tr>
+                                <td class="boldText"><i class="bi-exclamation-triangle-fill" style="font-size:18px"></i>&nbsp;&nbsp;&nbsp;&nbsp;Latitude</td>
+                                <td th:text="${cityData.latitude}"/>
+                            </tr>
+                            <tr>
+                                <td class="boldText"><i class="bi-exclamation-circle-fill" style="font-size:18px"></i>&nbsp;&nbsp;&nbsp;&nbsp;Longitude</td>
+                                <td th:text="${cityData.longitude}"/>
+                            </tr>
+                            <tr>
+                                <td class="boldText"><i class="bi bi-people-fill"></i>&nbsp;&nbsp;&nbsp;&nbsp;Population</td>
+                                <td th:text="${cityData.population}"/>
+                            </tr>
+                            <tr>
+                                <td class="boldText"><i class="bi bi-clock-fill"></i>&nbsp;&nbsp;&nbsp;&nbsp;Timezone</td>
+                                <td th:text="${timeZone}"/>
+                            </tr>
+                            <tr>
+                                <td class="boldText"><i class="bi-sunrise-fill" style="font-size:18px"></i>&nbsp;&nbsp;&nbsp;&nbsp;Sunrise</td>
+                                <td th:text="${cityData.sunRise}"/>
+                            </tr>
+                            <tr>
+                                <td class="boldText"><i class="bi-sunset-fill" style="font-size:18px"></i>&nbsp;&nbsp;&nbsp;&nbsp;Sunset</td>
+                                <td th:text="${cityData.sunSet}"/>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-sm-2"></div>
+            <div class="col-sm-4" style="overflow:auto">
+                <div class="gradient" style="background-color:white; padding:20px">
+                    <h3 th:text="${location}+' current weather Info'"/><br>
+                    <table class="table table-striped table-hover">
+                        <tbody>
+                        <tr>
+                            <td class="boldText"><i class="bi bi-building"></i>&nbsp;&nbsp;&nbsp;&nbsp;CityName</td>
+                            <td th:text="${weatherInfo.cityName}"/>
+                        </tr>
+                        <tr>
+                            <td class="boldText"><i class="bi bi-sun-fill"></i>&nbsp;&nbsp;&nbsp;&nbsp;Current Weather</td>
+                            <td th:text="${weatherInfo.currentWeather}"/>
+                        </tr>
+                        <tr>
+                            <td class="boldText"><i class="bi bi-pencil-square"></i>&nbsp;&nbsp;&nbsp;&nbsp;Description</td>
+                            <td th:text="${weatherInfo.weatherDescription}"/>
+                        </tr>
+                        <tr>
+                            <td class="boldText">>&#8490;&nbsp;&nbsp;&nbsp;&nbsp;Temperature</td>
+                            <td th:text="${weatherInfo.temperature}"/>
+                        </tr>
+                        <tr>
+                            <td class="boldText"><i class="bi bi-thermometer-high"></i>&nbsp;&nbsp;&nbsp;&nbsp;Max Temperature</td>
+                            <td th:text="${maxTemp}+' &#8451;'"/>
+                        </tr>
+                        <tr>
+                            <td class="boldText"><i class="bi bi-thermometer-low"></i>&nbsp;&nbsp;&nbsp;&nbsp;Min Temperature</td>
+                            <td th:text="${minTemp}+' &#8451;'"/>
+                        </tr>
+                        <tr>
+                            <td class="boldText">&#8451;&nbsp;&nbsp;&nbsp;&nbsp;Celsius</td>
+                            <td th:text="${weatherInfo.celsius}+' &#8451;'"/>
+                        </tr>
+                        <tr>
+                            <td class="boldText">&#8457;&nbsp;&nbsp;&nbsp;&nbsp;Fahrenheit</td>
+                            <td th:text="${weatherInfo.fahrenheit}+' &#8457;'"/>
+                        </tr>
+                        <tr>
+                            <td class="boldText"><i class="bi bi-wind"></i>&nbsp;&nbsp;&nbsp;&nbsp;Wind speed</td>
+                            <td th:text="${weatherInfo.windSpeed}+' km/h'"/>
+                        </tr>
+                        <tr>
+                            <td class="boldText"><i class="bi bi-clock-fill"></i>&nbsp;&nbsp;&nbsp;&nbsp;Last updated</td>
+                            <td th:text="'Updated '+${lastWeatherUpdated}+' minutes ago'"/>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-sm-1"></div>
+        </div><br><br><br><br>
+        <div class="row">
+            <div class="col-sm">
+                <div class="gradient">
+                    <table class="table table-striped">
+                        <tbody>
+                            <tr style="font-weight:bold; text-align:center;">
+                                <td colspan="4" th:text="'City Name : '+${location}"/>
+                                <td colspan="4">Week forecast data</td>
+                                <td colspan="4" th:text="'Last updated '+${lastForecastDataUpdated}+' minutes ago'"/>
+                            </tr>
+                            <tr style="background-color:white; font-weight:bold; text-align:center">
+                                <td><i class="bi bi-sun-fill"></i>&nbsp;&nbsp;Current weather</td>
+                                <td><i class="bi bi-pencil-square"></i>&nbsp;&nbsp;Description</td>
+                                <td><i class="bi-image-fill" style="font-size:18px"></i>&nbsp;&nbsp;Pictorial</td>
+                                <td>&#8490;&nbsp;- Temperature in kelvin </td>
+                                <td>&#8451;&nbsp;Max temperature</td>
+                                <td>&#8451;&nbsp;Min temperature</td>
+                                <td><i class="bi-clouds-fill" style="font-size:18px"></i>&nbsp;&nbsp;Humidity</td>
+                                <td>&#8451;&nbsp;Celsius</td>
+                                <td>&#8457;&nbsp;Fahrenheit</td>
+                                <td><i class="bi bi-wind"></i>&nbsp;&nbsp;Wind speed</td>
+                                <td><i class="bi bi-calendar-date-fill"></i>&nbsp;&nbsp;Date</td>
+                                <td><i class="bi bi-clock-fill"></i>&nbsp;&nbsp;Time</td>
+                            </tr>
+                            <tr th:each="forecast:${listData}" style="text-align:center" id="highlight">
+                                <td th:text="${forecast.currentWeather}"/>
+                                <td th:text="${forecast.weatherDescription}"/>
+                                <td><img th:src="'http://openweathermap.org/img/w/'+${forecast.icon}+'.png'"/></td>
+                                <td th:text="${forecast.temperature}+' &#8490;'"/>
+                                <td th:text="${forecast.tempMax}+' &#8451;'"/>
+                                <td th:text="${forecast.tempMin}+' &#8451;'"/>
+                                <td th:text="${forecast.humidity}+' %'"/>
+                                <td th:text="${forecast.celsius}+' &#8451;'"/>
+                                <td th:text="${forecast.fahrenheit}+' &#8457;'"/>
+                                <td th:text="${forecast.windSpeed}+' km/h'"/>
+                                <td th:text="${forecast.date}"/>
+                                <td th:text="${forecast.time}"/>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <br><br>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="currentWeather" tabindex="-1" aria-labelledby="weather" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="weather" th:text="${weatherInfo.cityName}+' Weather Info'"/>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div><img th:src="'http://openweathermap.org/img/w/'+${weatherInfo.icon}+'.png'" style="width:25%; height:25%; margin-left:35%;"/></div>
+                    <br>
+                    <table class="table">
+                        <tbody>
+                        <tr>
+                            <td class="boldText"><i class="bi bi-building"></i>&nbsp;&nbsp;&nbsp;&nbsp;CityName</td>
+                            <td th:text="${weatherInfo.cityName}"/>
+                        </tr>
+                        <tr>
+                            <td class="boldText"><i class="bi bi-sun-fill"></i>&nbsp;&nbsp;&nbsp;&nbsp;Current Weather</td>
+                            <td th:text="${weatherInfo.currentWeather}"/>
+                        </tr>
+                        <tr>
+                            <td class="boldText"><i class="bi bi-pencil-square"></i>&nbsp;&nbsp;&nbsp;&nbsp;Description</td>
+                            <td th:text="${weatherInfo.weatherDescription}"/>
+                        </tr>
+                        <tr>
+                            <td class="boldText">>&#8490;&nbsp;&nbsp;&nbsp;&nbsp;Temperature</td>
+                            <td th:text="${weatherInfo.temperature}"/>
+                        </tr>
+                        <tr>
+                            <td class="boldText"><i class="bi bi-thermometer-high"></i>&nbsp;&nbsp;&nbsp;&nbsp;Max Temperature</td>
+                            <td th:text="${maxTemp}+' &#8451;'"/>
+                        </tr>
+                        <tr>
+                            <td class="boldText"><i class="bi bi-thermometer-low"></i>&nbsp;&nbsp;&nbsp;&nbsp;Min Temperature</td>
+                            <td th:text="${minTemp}+' &#8451;'"/>
+                        </tr>
+                        <tr>
+                            <td class="boldText">&#8451;&nbsp;&nbsp;&nbsp;&nbsp;Celsius</td>
+                            <td th:text="${weatherInfo.celsius}+' &#8451;'"/>
+                        </tr>
+                        <tr>
+                            <td class="boldText">&#8457;&nbsp;&nbsp;&nbsp;&nbsp;Fahrenheit</td>
+                            <td th:text="${weatherInfo.fahrenheit}+' &#8457;'"/>
+                        </tr>
+                        <tr>
+                            <td class="boldText"><i class="bi bi-wind"></i>&nbsp;&nbsp;&nbsp;&nbsp;Wind speed</td>
+                            <td th:text="${weatherInfo.windSpeed}+' km/h'"/>
+                        </tr>
+                        <tr>
+                            <td class="boldText"><i class="bi bi-clock-fill"></i>&nbsp;&nbsp;&nbsp;&nbsp;Last updated</td>
+                            <td th:text="'Updated '+${lastWeatherUpdated}+' minutes ago'"/>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

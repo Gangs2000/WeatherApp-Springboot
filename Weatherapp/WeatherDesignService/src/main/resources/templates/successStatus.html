@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>OTP-Success</title>
+  <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</head>
+<body style="background-color:#95A3E0;">
+  <script>
+      swal({
+          title: "Password reset done!",
+          text: "Please, Login with new password..!!",
+          icon: "success",
+          });
+          setTimeout(() => { window.location.href="/login"; }, 4000);
+  </script>
+</body>
+</html>

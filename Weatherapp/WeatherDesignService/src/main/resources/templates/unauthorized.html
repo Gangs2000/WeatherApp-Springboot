@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Unauthorized</title>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</head>
+<body style="background-color:#95A3E0;">
+<script>
+      swal({
+          title: "Unauthorized request!",
+          text: "Looks like email ID is not registered..!!",
+          icon: "error",
+          });
+          setTimeout(() => { window.location.href="/login"; }, 4000);
+  </script>
+</body>
+</html>
