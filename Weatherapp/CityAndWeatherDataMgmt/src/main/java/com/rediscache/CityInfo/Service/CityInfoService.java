@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @Service
 public class CityInfoService implements CityInfoInterface {
 
-    private final String apiKey="94043c06b6556c7b17378841ceded534";
+    private final String apiKey="**************************************************";
 
     @Autowired
     CityInfoRepository cityInfoRepository;
